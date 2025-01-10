@@ -49,7 +49,7 @@ const emit = defineEmits<{
         <div class="text-xs mt-1">成績確認</div>
       </button>
       <button
-        @click="emit('navigate', 'subsc')"
+        @click="emit('navigate', 'learningMaterials')"
         class="text-center px-2 py-1 hover:bg-gray-100 rounded"
       >
         <i class="fas fa-book text-lg"></i>

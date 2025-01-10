@@ -11,7 +11,7 @@ import ExamRequestConfirm from './components/ExamRequestConfirm.vue';
 import ExamRequest from './components/ExamRequest.vue';
 import ExamSubjectsResults from './components/ExamSubjectsResults.vue';
 import SubjectPerformanceViewer from './components/SubjectPerformanceViewer.vue';
-
+import LearningMaterials from './components/LearningMaterials.vue';
 const currentComponent = ref('signin');
 const user = ref<{ email: string } | null>(null);
 const selectedStudent = ref<{ name: string; grade: number } | null>({ name: '山田太郎', grade: 3 });
@@ -133,6 +133,9 @@ const handleBack = () => {
     case 'ExamRequestConfirm':
       currentComponent.value = 'ExamRequest';
       break;
+    case 'learningMaterials':
+      currentComponent.value = 'learningMaterials';
+      break;
     default:
       currentComponent.value = 'dashboard';
   }
@@ -148,6 +151,9 @@ const handleNavigate = (page: string) => {
       break;
     case 'results':
       currentComponent.value = 'results';
+      break;
+    case 'learningMaterials':
+      currentComponent.value = 'learningMaterials';
       break;
   }
 };
@@ -175,6 +181,10 @@ const handleSelectExamResult = (index: number) => {
 const handleSelectSubject = (subject: any) => {
   selectedSubject.value = subject;
   currentComponent.value = 'SubjectPerformanceViewer';
+};
+
+const handleLearningMaterials = () => {
+  currentComponent.value = 'learningMaterials';
 };
 </script>
 
@@ -205,6 +215,7 @@ const handleSelectSubject = (subject: any) => {
       @delete-student="handleDeleteStudent"
       @apply-for-exams="handleApplyForExams"
       @view-results="handleViewResults"
+      @add-materials="handleLearningMaterials"
     />
 
     <ExamList
@@ -258,6 +269,13 @@ const handleSelectSubject = (subject: any) => {
       :selected-tab="selectedTab"
       @back="handleBack"
       @select-tab="(tab) => selectedTab = tab"
+    />
+    
+    <LearningMaterials
+      v-else-if="currentComponent === 'learningMaterials'"
+      :user="user"
+      :selected-student="selectedStudent"
+      @back="handleBack"
     />
 
     <Footer
